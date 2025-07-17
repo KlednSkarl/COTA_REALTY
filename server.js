@@ -40,5 +40,30 @@ app.get('/tbl', async (req, res) => {
     }
 });
 
+app.get('/tbl', async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request().query('SELECT * FROM H_tblPhase');
+        res.json(result.recordset);
+         
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Database Error');
+    }
+});
+
+app.get('/Area', async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request().query('SELECT * FROM H_tblArea');
+        res.json(result.recordset);
+         
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Database Error');
+    }
+});
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

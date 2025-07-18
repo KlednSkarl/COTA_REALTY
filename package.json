@@ -16,5 +16,13 @@
     "mssql": "^11.0.1"
   },
   "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KlednSkarl/COTA_REALTY.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KlednSkarl/COTA_REALTY/issues"
+  },
+  "homepage": "https://github.com/KlednSkarl/COTA_REALTY#readme",
   "description": ""
 }

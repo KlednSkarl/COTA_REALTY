@@ -113,7 +113,6 @@ app.get('/PrevRead', async (req,res) =>{
         try{
             const pool = await sql.connect(config);
             const result = await pool.request()
-            .input('WMeter',WMNo)
             .execute('H_tblWMeterDescr');
             res.json(result.recordset);
         }

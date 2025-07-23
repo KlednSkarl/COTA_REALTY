@@ -107,6 +107,22 @@ app.get('/ClientFiltered', async (req,res) =>{
             }
 });
 
+app.get('/PrevRead', async (req,res) =>{
+        const{WMNo} = req.query;
+
+        try{
+            const pool = await sql.connect(config);
+            const result = await pool.request()
+            .input('WMeter',WMNo)
+            .execute('H_tblWMeterDescr');
+            res.json(result.recordset);
+        }
+        catch {
+            console.error(err);
+            res.status(500).send('Database Error');
+        }
+
+});
 
 
 const PORT = process.env.PORT || 3000;

@@ -124,6 +124,38 @@ app.get('/PrevRead', async (req,res) =>{
 });
 
 
+app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
+    const {WMNo,PR_Type,MStat,PrevMRead,PrevDteRead,CurMRead,CurDteRead,CBUsed,DueDte,dteDC,CAmt} = req.body();
+
+    try{
+            await sql.connect(config);
+            const request = new sql.Request();
+            
+            request.input('WMNo',sql.VarChar(20),WMNo);
+            request.input('PR_Type',sql.VarChar(20),PR_Type);
+            request.input('MStat', sql.VarChar(20),MStat);
+            request.input('PrevMRead',sql.BigInt,PrevMRead);
+            request.input('PrevDteRead',sql.DateTime,PrevDteRead);
+            request.input('CurMRead',sql.BigInt,CurMRead);
+            request.input('CurDteRead',sql.DateTime,CurDteRead);
+            request.input('CBUsed',sql.BigInt,CBUsed);
+            request.input('DueDte',sql.DateTime,DueDte);
+            request.input('dteDC',sql.DateTime,dteDC);
+            request.input('CAmt',sql.BigInt,CAmt);
+
+            await request.execute('[H_InsertToPrevReadFromLocal]');
+
+               res.status(200).json({ success: true, message: 'Data inserted successfully' });
+    }catch(err){
+                console.error(err);
+                res.status(500).json({ success: false, message: 'Server error', error: err.message });
+ 
+    }
+
+
+});
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 

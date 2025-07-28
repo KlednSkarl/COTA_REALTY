@@ -125,14 +125,14 @@ app.get('/PrevRead', async (req,res) =>{
 
 
 app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
-    const {WMNo,PR_Type,MStat,PrevMRead,PrevDteRead,CurMRead,CurDteRead,CBUsed,DueDte,dteDC,CAmt} = req.body;
+    const {WMNo,PRType,MStat,PrevMRead,PrevDteRead,CurMRead,CurDteRead,CBUsed,DueDte,dteDC,CAmt} = req.body;
 
     try{
             await sql.connect(config);
             const request = new sql.Request();
             
             request.input('WMNo',sql.VarChar(20),WMNo);
-            request.input('PR_Type',sql.VarChar(20),PR_Type);
+            request.input('PRType',sql.VarChar(20),PR_Type);
             request.input('MStat', sql.VarChar(20),MStat);
             request.input('PrevMRead',sql.BigInt,PrevMRead);
             request.input('PrevDteRead',sql.DateTime,PrevDteRead);

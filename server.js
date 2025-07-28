@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const sql = require('mssql');
 const API_KEY = process.env.API_KEY;
-
+app.use(express.json());
 app.use((req,res,next)=>{
 const clientKey = req.headers['x-api-key'];
     console.log('Received x-api-key:', clientKey);

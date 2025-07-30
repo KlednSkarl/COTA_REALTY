@@ -101,7 +101,7 @@ app.get('/ClientFiltered', async (req,res) =>{
             .execute('H_FilterClient');
             res.json(result.recordset);
         }
-            catch {
+            catch (err) {
             console.error(err);
             res.status(500).send('Database Error');
             }
@@ -116,7 +116,7 @@ app.get('/PrevRead', async (req,res) =>{
             .execute('H_tblWMeterDescr');
             res.json(result.recordset);
         }
-        catch {
+        catch (err) {
             console.error(err);
             res.status(500).send('Database Error');
         }

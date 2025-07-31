@@ -125,7 +125,7 @@ app.get('/PrevRead', async (req,res) =>{
 
 
 app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
-    const {WMNo,PR_Type,MStat,PrevMRead,PrevDteRead,CurMRead,CurDteRead,CBUsed,DueDte,dteDC,CAmt} = req.body();
+    const {WMNo,PR_Type,MStat,PrevMRead,PrevDteRead,CurMRead,CurDteRead,CBUsed,DueDte,dteDC,CAmt,UserID} = req.body;
 
     try{
             await sql.connect(config);
@@ -142,6 +142,7 @@ app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
             request.input('DueDte',sql.DateTime,DueDte);
             request.input('dteDC',sql.DateTime,dteDC);
             request.input('CAmt',sql.BigInt,CAmt);
+            request.input('UserID',sql.VarChar,UserID);
 
             await request.execute('[H_InsertToPrevReadFromLocal]');
 

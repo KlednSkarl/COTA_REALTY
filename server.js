@@ -143,7 +143,7 @@ app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
             request.input('dteDC',sql.DateTime,dteDC);
             request.input('CAmt',sql.BigInt,CAmt);
             request.input('RefLine',sql.BigInt,RefLine);
-            request.input('UserID',sql.Varchar(20),UserID);
+            request.input('UserID',sql.VarChar(20),UserID);
             await request.execute('[H_InsertToPrevReadFromLocal]');
 
                res.status(200).json({ success: true, message: 'Data inserted successfully' });

@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const sql = require('mssql');
 const API_KEY = process.env.API_KEY;
-
+app.use(express.json());
 app.use((req,res,next)=>{
 const clientKey = req.headers['x-api-key'];
     console.log('Received x-api-key:', clientKey);
@@ -101,7 +101,7 @@ app.get('/ClientFiltered', async (req,res) =>{
             .execute('H_FilterClient');
             res.json(result.recordset);
         }
-            catch {
+            catch (err) {
             console.error(err);
             res.status(500).send('Database Error');
             }
@@ -116,7 +116,7 @@ app.get('/PrevRead', async (req,res) =>{
             .execute('H_tblWMeterDescr');
             res.json(result.recordset);
         }
-        catch {
+        catch (err) {
             console.error(err);
             res.status(500).send('Database Error');
         }
@@ -125,14 +125,14 @@ app.get('/PrevRead', async (req,res) =>{
 
 
 app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
-    const {WMNo,PR_Type,MStat,PrevMRead,PrevDteRead,CurMRead,CurDteRead,CBUsed,DueDte,dteDC,CAmt} = req.body;
+    const {WMNo,PR_Type,MStat,PrevMRead,PrevDteRead,CurMRead,CurDteRead,CBUsed,DueDte,dteDC,CAmt,RefLine,UserID} = req.body();
 
     try{
             await sql.connect(config);
             const request = new sql.Request();
             
             request.input('WMNo',sql.VarChar(20),WMNo);
-            request.input('PR_Type',sql.VarChar(20),PR_Type);
+            request.input('PRType',sql.VarChar(20),PR_Type);
             request.input('MStat', sql.VarChar(20),MStat);
             request.input('PrevMRead',sql.BigInt,PrevMRead);
             request.input('PrevDteRead',sql.DateTime,PrevDteRead);
@@ -142,7 +142,8 @@ app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
             request.input('DueDte',sql.DateTime,DueDte);
             request.input('dteDC',sql.DateTime,dteDC);
             request.input('CAmt',sql.BigInt,CAmt);
-
+            request.input('RefLine',sql.BigInt,RefLine);
+            request.input('UserID',sql.VarChar(20),UserID);
             await request.execute('[H_InsertToPrevReadFromLocal]');
 
                res.status(200).json({ success: true, message: 'Data inserted successfully' });

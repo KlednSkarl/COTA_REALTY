@@ -158,7 +158,7 @@ app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
 
 app.post('/UpdateStatus', async (req, res) => {
     const { RefLine } = req.body; // ✅ FIXED
-    console.log("Received RefLine:", RefLine);
+    console.log("Received RefLine Updated:", RefLine);
 
     try {
         const pool = await sql.connect(config);

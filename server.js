@@ -156,13 +156,13 @@ app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
 
 });
 
-app.get('/UpdateStatus', async (req,res) =>{
-        const{WMNo} = req.query;
+app.post('/UpdateStatus', async (req,res) =>{
+        const{RefLine} = req.query;
 
         try{
             const pool = await sql.connect(config);
-            const result = await pool.request();
-            request.input('RefLine',BigInt)
+            const result = await pool.request()
+            input('RefLine',BigInt)
             .execute('H_UpdateStatusInHistorytbl');
             res.json(result.recordset);
         }

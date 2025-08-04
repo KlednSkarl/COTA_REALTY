@@ -125,7 +125,7 @@ app.get('/PrevRead', async (req,res) =>{
 
 
 app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
-    const {WMNo,PR_Type,MStat,PrevMRead,PrevDteRead,CurMRead,CurDteRead,CBUsed,DueDte,dteDC,CAmt,RefLine,UserID} = req.body();
+    const {WMNo,PR_Type,MStat,PrevMRead,PrevDteRead,CurMRead,CurDteRead,CBUsed,DueDte,dteDC,CAmt,RefLine,UserID} = req.body;
 
     try{
             await sql.connect(config);

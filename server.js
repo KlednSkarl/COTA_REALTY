@@ -156,21 +156,21 @@ app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
 
 });
 
-app.post('/UpdateStatus', async (req,res) =>{
-        const{RefLine} = req.query;
+app.post('/UpdateStatus', async (req, res) => {
+    const { RefLine } = req.body;
+    console.log("Received RefLine:", RefLine); // DEBUG
 
-        try{
-            const pool = await sql.connect(config);
-            const result = await pool.request()
-            input('RefLine',BigInt)
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+            .input('RefLine', sql.BigInt, RefLine)
             .execute('H_UpdateStatusInHistorytbl');
-            res.json(result.recordset);
-        }
-        catch {
-            console.error(err);
-            res.status(500).send('Database Error');
-        }
 
+        res.json(result.recordset);
+    } catch (err) {
+        console.error("Error occurred:", err); // Log actual error
+        res.status(500).send('Database Error');
+    }
 });
 
 

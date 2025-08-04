@@ -157,18 +157,18 @@ app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
 });
 
 app.post('/UpdateStatus', async (req, res) => {
-    const { RefLine } = req.body();
-    console.log("Received RefLine:", RefLine); // DEBUG
+    const { RefLine } = req.body; // ✅ FIXED
+    console.log("Received RefLine:", RefLine);
 
     try {
         const pool = await sql.connect(config);
         const result = await pool.request()
-            .input('RefID', sql.BigInt, RefLine)
+            .input('RefID', sql.BigInt, RefLine) // Use correct SQL param name
             .execute('H_UpdateStatusInHistorytbl');
 
         res.json(result.recordset);
     } catch (err) {
-        console.error("Error occurred:", err); // Log actual error
+        console.error("Error occurred:", err);
         res.status(500).send('Database Error');
     }
 });

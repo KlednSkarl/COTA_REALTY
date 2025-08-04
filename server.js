@@ -157,7 +157,7 @@ app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
 });
 
 app.post('/UpdateStatus', async (req, res) => {
-    const { RefLine } = req.body;
+    const { RefLine } = req.body();
     console.log("Received RefLine:", RefLine); // DEBUG
 
     try {

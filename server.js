@@ -163,7 +163,7 @@ app.post('/UpdateStatus', async (req, res) => {
     try {
         const pool = await sql.connect(config);
         const result = await pool.request()
-            .input('RefLine', sql.BigInt, RefLine)
+            .input('RefID', sql.BigInt, RefLine)
             .execute('H_UpdateStatusInHistorytbl');
 
         res.json(result.recordset);

@@ -125,7 +125,7 @@ app.get('/PrevRead', async (req,res) =>{
 
 
 app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
-    const {WMNo,PR_Type,MStat,PrevMRead,PrevDteRead,CurMRead,CurDteRead,CBUsed,DueDte,dteDC,CAmt,UserID} = req.body;
+    const {WMNo,PR_Type,MStat,PrevMRead,PrevDteRead,CurMRead,CurDteRead,CBUsed,DueDte,dteDC,CAmt} = req.body;
 
     try{
             await sql.connect(config);
@@ -142,7 +142,6 @@ app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
             request.input('DueDte',sql.DateTime,DueDte);
             request.input('dteDC',sql.DateTime,dteDC);
             request.input('CAmt',sql.BigInt,CAmt);
-            request.input('UserID',sql.VarChar,UserID);
 
             await request.execute('[H_InsertToPrevReadFromLocal]');
 
@@ -155,6 +154,26 @@ app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
 
 
 });
+
+app.get('/UpdateStatus', async (req,res) =>{
+        const{WMNo} = req.query;
+
+        try{
+            const pool = await sql.connect(config);
+            const result = await pool.request();
+            request.input('RefLine',BigInt)
+            .execute('H_UpdateStatusInHistorytbl');
+            res.json(result.recordset);
+        }
+        catch {
+            console.error(err);
+            res.status(500).send('Database Error');
+        }
+
+});
+
+
+
 
 
 const PORT = process.env.PORT || 3000;

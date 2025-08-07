@@ -176,7 +176,7 @@ app.post('/UpdateStatus', async (req, res) => {
 
 
 app.post('/ActChecker', async (req, res) => {
-    const { user, trans } = req.body;
+    const { UserID, MStat } = req.body;
     console.log("Received", user + " " + trans);
 
     try {

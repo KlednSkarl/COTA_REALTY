@@ -177,7 +177,7 @@ app.post('/UpdateStatus', async (req, res) => {
 
 app.post('/ActChecker', async (req, res) => {
     const { UserID, MStat } = req.body;
-    console.log("Received", user + " " + trans);
+ 
 
     try {
         const pool = await sql.connect(config);

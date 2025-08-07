@@ -163,8 +163,8 @@ app.post('/UpdateStatus', async (req, res) => {
     try {
         const pool = await sql.connect(config);
         const result = await pool.request()
-            .input('RefID', sql.BigInt, RefLine) // Use correct SQL param name
-            .execute('H_UpdateStatusInHistorytbl');
+            result.input('RefID', sql.BigInt, RefLine) // Use correct SQL param name
+            result.execute('H_UpdateStatusInHistorytbl');
 
         res.json(result.recordset);
     } catch (err) {
@@ -174,6 +174,25 @@ app.post('/UpdateStatus', async (req, res) => {
 });
 
 
+
+app.post('/ActChecker', async (req, res) => {
+    const { user, trans } = req.body;
+    console.log("Received", user + " " + trans);
+
+    try {
+        const pool = await sql.connect(config);
+
+        const result = await pool.request()
+            .input('UserID', sql.VarChar(20), user)
+            .input('MStat', sql.VarChar(20), trans)
+            .execute('H_UserTranChecker');
+
+        res.json(result.recordset);
+    } catch (err) {
+        console.error("Error occurred", err);
+        res.status(500).send('Database Error');
+    }
+});// checker for transactions
 
 
 

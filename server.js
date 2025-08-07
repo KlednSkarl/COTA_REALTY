@@ -183,8 +183,8 @@ app.post('/ActChecker', async (req, res) => {
         const pool = await sql.connect(config);
 
         const result = await pool.request()
-            .input('UserID', sql.VarChar(20), UserID)
-            .input('MStat', sql.VarChar(20), MStat)
+            .input('User', sql.VarChar(20), UserID)
+            .input('Stat', sql.VarChar(20), MStat)
             .execute('H_UserTranChecker');
 
         res.json(result.recordset);

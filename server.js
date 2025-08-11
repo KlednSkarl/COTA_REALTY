@@ -200,6 +200,25 @@ app.post('/ActChecker', async (req, res) => {
     }
 });// checker for transactions
 
+app.post('/UserLogin', async (req,res) =>{
+    const{UserID,UserPass} = req.body();
+
+    try{
+        const pool = await pool.request()
+        .input('UserNm',sql.VarChar(30),UserID)
+        .input('UserPs',sql.VarChar(30),UserPass)
+        .execute('Mbl_UserChecker')
+        
+        res.json(result.recordset);
+    }catch(err){
+        console.error("Error occurred" , err);
+        res.status(500).send('Database Error');
+    }
+
+}); // login API
+
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

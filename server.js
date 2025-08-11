@@ -216,6 +216,24 @@ app.get('/UserLogin', async (req,res) =>{
 }); // login importation API
 
 
+app.get('/Billing', async (req,res) =>{
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request().query('SELECT Line, Trno, RLine, MStat, CBUsed, DueDte, CAmt, AA, BalAmt, Rem FROM H_tblBilling');
+        res.json(result.recordset);
+         
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Database Error');
+    }
+
+}); // Billing importation API
+
+
+
+
+
+
 
 
 const PORT = process.env.PORT || 3000;

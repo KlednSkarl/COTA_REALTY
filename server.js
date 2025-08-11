@@ -205,7 +205,7 @@ app.post('/ActChecker', async (req, res) => {
 app.get('/UserLogin', async (req,res) =>{
     try {
         const pool = await sql.connect(config);
-        const result = await pool.request().query('select Mbl_UserID, Mbl_Pass from TabUsers');
+        const result = await pool.request().query('select Line, Mbl_UserID, Mbl_Pass from TabUsers');
         res.json(result.recordset);
          
     } catch (err) {

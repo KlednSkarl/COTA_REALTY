@@ -200,9 +200,9 @@ app.post('/ActChecker', async (req, res) => {
     }
 });// checker for transactions
 
+ 
 
-
- app.get('/Subd', async (req, res) => {
+app.get('/UserLogin', async (req,res) =>{
     try {
         const pool = await sql.connect(config);
         const result = await pool.request().query('select Mbl_UserID, Mbl_Pass from TabUsers');
@@ -212,30 +212,8 @@ app.post('/ActChecker', async (req, res) => {
         console.error(err);
         res.status(500).send('Database Error');
     }
-}); // select * users with Mobile login Credentials
 
-
-
-
-
-
-
-app.post('/UserLogin', async (req,res) =>{
-    const{UserID,UserPass} = req.body();
-
-    try{
-        const pool = await pool.request()
-        .input('UserNm',sql.VarChar(30),UserID)
-        .input('UserPs',sql.VarChar(30),UserPass)
-        .execute('Mbl_UserChecker')
-        
-        res.json(result.recordset);
-    }catch(err){
-        console.error("Error occurred" , err);
-        res.status(500).send('Database Error');
-    }
-
-}); // login API
+}); // login importation API
 
 
 

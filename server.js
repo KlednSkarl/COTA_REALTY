@@ -121,7 +121,13 @@ app.get('/PrevRead', async (req,res) =>{
             res.status(500).send('Database Error');
         }
 
-});
+}); // previous reading 
+
+
+
+
+
+
 
 
 app.post('/ImportedFromLocalPrevRead',async (req,res)=> {
@@ -171,11 +177,13 @@ app.post('/UpdateStatus', async (req, res) => {
         console.error("Error occurred:", err);
         res.status(500).send('Database Error');
     }
-});
+}); // update status 
 
 
 
 app.post('/ActChecker', async (req, res) => {
+
+    console.log("Incoming body:", req.body);
     const { user, trans } = req.body;
     console.log("Received", user + " " + trans);
 
@@ -193,6 +201,29 @@ app.post('/ActChecker', async (req, res) => {
         res.status(500).send('Database Error');
     }
 });// checker for transactions
+
+
+app.post('/UserLogin', async (req,res) =>{
+    const{UserID,UserPass} = req.body();
+
+    try{
+        const pool = await pool.request()
+        .input('UserNm',sql.VarChar(30),UserID)
+        .input('UserPs',sql.VarChar(30),UserPass)
+        .execute('Mbl_UserChecker')
+        
+        res.json(result.recordset);
+    }catch(err){
+        console.error("Error occurred" , err);
+        res.status(500).send('Database Error');
+    }
+
+}); // login API
+
+
+
+
+
 
 
 

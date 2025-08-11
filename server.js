@@ -200,6 +200,26 @@ app.post('/ActChecker', async (req, res) => {
     }
 });// checker for transactions
 
+
+
+ app.get('/Subd', async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request().query('select Mbl_UserID, Mbl_Pass from TabUsers');
+        res.json(result.recordset);
+         
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Database Error');
+    }
+}); // select * users with Mobile login Credentials
+
+
+
+
+
+
+
 app.post('/UserLogin', async (req,res) =>{
     const{UserID,UserPass} = req.body();
 

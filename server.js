@@ -183,16 +183,14 @@ app.post('/UpdateStatus', async (req, res) => {
 
 app.post('/ActChecker', async (req, res) => {
 
-    console.log("Incoming body:", req.body);
-    const { user, trans } = req.body;
-    console.log("Received", user + " " + trans);
-
+ 
+    const { UserID, MStat } = req.body;
     try {
         const pool = await sql.connect(config);
 
         const result = await pool.request()
-            .input('UserID', sql.VarChar(20), user)
-            .input('MStat', sql.VarChar(20), trans)
+            .input('User', sql.VarChar(20), UserID)
+            .input('Stat', sql.VarChar(20), MStat)
             .execute('H_UserTranChecker');
 
         res.json(result.recordset);
@@ -201,30 +199,6 @@ app.post('/ActChecker', async (req, res) => {
         res.status(500).send('Database Error');
     }
 });// checker for transactions
-
-
-app.post('/UserLogin', async (req,res) =>{
-    const{UserID,UserPass} = req.body();
-
-    try{
-        const pool = await pool.request()
-        .input('UserNm',sql.VarChar(30),UserID)
-        .input('UserPs',sql.VarChar(30),UserPass)
-        .execute('Mbl_UserChecker')
-        
-        res.json(result.recordset);
-    }catch(err){
-        console.error("Error occurred" , err);
-        res.status(500).send('Database Error');
-    }
-
-}); // login API
-
-
-
-
-
-
 
 
 const PORT = process.env.PORT || 3000;

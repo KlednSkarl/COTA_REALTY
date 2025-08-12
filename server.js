@@ -219,7 +219,7 @@ app.get('/UserLogin', async (req,res) =>{
 app.get('/Billing', async (req,res) =>{
     try {
         const pool = await sql.connect(config);
-        const result = await pool.request().query('SELECT Line, Trno, RLine, MStat, CBUsed, DueDte, CAmt, AA, BalAmt, Rem FROM H_tblBilling');
+        const result = await pool.request().query('SELECT Line, Trno, RLine, MStat, CBUsed, DueDte, CAmt, AA, BalAmt, Rem,WMNo FROM H_tblBilling');
         res.json(result.recordset);
          
     } catch (err) {

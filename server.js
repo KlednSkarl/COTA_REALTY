@@ -232,7 +232,24 @@ app.get('/Billing', async (req,res) =>{
 
 
 
+app.post('/UserTranCnt', async (req, res) => {
 
+ 
+    const { UserID, MStat } = req.body;
+    try {
+        const pool = await sql.connect(config);
+
+        const result = await pool.request()
+            .input('user', sql.VarChar(20), UserID)
+            .input('CurDteRead', sql.VarChar(20), MStat)
+            .execute('H_UserTranRecord');
+
+        res.json(result.recordset);
+    } catch (err) {
+        console.error("Error occurred", err);
+        res.status(500).send('Database Error');
+    }
+});// checker for transactions
 
 
 

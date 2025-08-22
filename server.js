@@ -253,6 +253,65 @@ app.post('/UserTranCnt', async (req, res) => {
 
 
 
+app.post('/PerBatchUpload', async (req,res) => {
+    try{
+            const pool = await sql.connect(config);
+            const tvp = new sql.Table("PrevReadTableType");
+            tvp.columns.add("WMNo", sql.VarChar(20));
+            tvp.columns.add("PRType", sql.VarChar(20));
+            tvp.columns.add("MStat", sql.VarChar(20));
+            tvp.columns.add("PrevMRead", sql.BigInt);
+            tvp.columns.add("PrevDteRead", sql.DateTime);
+            tvp.columns.add("CurMRead", sql.BigInt);
+            tvp.columns.add("CurDteRead", sql.DateTime);
+            tvp.columns.add("CBUsed", sql.BigInt);
+            tvp.columns.add("DueDte", sql.DateTime);
+            tvp.columns.add("dteDC", sql.DateTime);
+            tvp.columns.add("CAmt", sql.BigInt);
+            tvp.columns.add("RefLine", sql.BigInt);
+            tvp.columns.add("UserID", sql.VarChar(20));
+
+
+            req.body.forEach(item => {
+               tvp.rows.add(
+                        item.WMNo,
+        item.PRType,
+        item.MStat,
+        item.PrevMRead,
+        new Date(item.PrevDteRead),
+        item.CurMRead,
+        new Date(item.CurDteRead),
+        item.CBUsed,
+        new Date(item.DueDte),
+        new Date(item.dteDC),
+        item.CAmt,
+        item.RefLine,
+        item.UserID
+
+
+               ); 
+            });
+
+
+            await pool.request().input("PrevReadRecordsBatch",tvp)
+            .execute("H_InsertToPrevReadFromLocal_perBatch");
+
+            res.json({success : true, message: "Batch insert successfully"});
+
+    }catch (err){
+
+        console.error(err);
+        res.status(500).json({success: false, error: err.message});
+    }
+
+
+
+});
+
+
+
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 

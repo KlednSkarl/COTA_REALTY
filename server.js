@@ -278,12 +278,12 @@ app.post('/PerBatchUpload', async (req,res) => {
         item.PRType,
         item.MStat,
         item.PrevMRead,
-        new safeDate(item.PrevDteRead),
+        safeDate(item.PrevDteRead),
         item.CurMRead,
-        new safeDate(item.CurDteRead),
+        safeDate(item.CurDteRead),
         item.CBUsed,
-        new safeDate(item.DueDte),
-        new safeDate(item.dteDC),
+        safeDate(item.DueDte),
+        safeDate(item.dteDC),
         item.CAmt,
         item.RefLine,
         item.UserID
@@ -311,9 +311,9 @@ app.post('/PerBatchUpload', async (req,res) => {
 
 
 function safeDate(value) {
-  if (!value) return null;  // handles null, undefined, empty string
+  if (!value) return new Date();  // fallback to NOW
   const d = new Date(value);
-  return isNaN(d.getTime()) ? null : d;
+  return isNaN(d.getTime()) ? new Date() : d;  // if invalid, also fallback to NOW
 }
 
 const PORT = process.env.PORT || 3000;

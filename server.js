@@ -278,12 +278,12 @@ app.post('/PerBatchUpload', async (req,res) => {
         item.PRType,
         item.MStat,
         item.PrevMRead,
-        new Date(item.PrevDteRead),
+        new safeDate(item.PrevDteRead),
         item.CurMRead,
-        new Date(item.CurDteRead),
+        new safeDate(item.CurDteRead),
         item.CBUsed,
-        new Date(item.DueDte),
-        new Date(item.dteDC),
+        new safeDate(item.DueDte),
+        new safeDate(item.dteDC),
         item.CAmt,
         item.RefLine,
         item.UserID
@@ -310,7 +310,11 @@ app.post('/PerBatchUpload', async (req,res) => {
 
 
 
-
+function safeDate(value) {
+  if (!value) return null;  // handles null, undefined, empty string
+  const d = new Date(value);
+  return isNaN(d.getTime()) ? null : d;
+}
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

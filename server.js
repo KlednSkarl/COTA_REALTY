@@ -258,7 +258,7 @@ app.post('/PerBatchUpload', async (req,res) => {
             const pool = await sql.connect(config);
             const tvp = new sql.Table("PrevReadTableType");
             tvp.columns.add("WMNo", sql.VarChar(20));
-            tvp.columns.add("PRType", sql.VarChar(20));
+            tvp.columns.add("PR_Type", sql.VarChar(20));
             tvp.columns.add("MStat", sql.VarChar(20));
             tvp.columns.add("PrevMRead", sql.BigInt);
             tvp.columns.add("PrevDteRead", sql.DateTime);

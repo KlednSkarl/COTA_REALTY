@@ -287,7 +287,7 @@ app.post('/PerBatchUpload', async (req,res) => {
         item.CAmt,
         item.RefLine,
         item.UserID,
-         
+        item.Line   
 
 
                ); 

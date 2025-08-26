@@ -275,7 +275,7 @@ app.post('/PerBatchUpload', async (req,res) => {
             req.body.forEach(item => {
                tvp.rows.add(
                         item.WMNo,
-        item.PRType,
+        item.PR_Type,
         item.MStat,
         item.PrevMRead,
         safeDate(item.PrevDteRead),

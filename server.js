@@ -40,6 +40,8 @@ app.get('/tbl', async (req, res) => {
     }
 });
 
+
+
 app.get('/tbl', async (req, res) => {
     try {
         const pool = await sql.connect(config);
@@ -270,7 +272,7 @@ app.post('/PerBatchUpload', async (req,res) => {
             tvp.columns.add("CAmt", sql.BigInt);
             tvp.columns.add("RefLine", sql.BigInt);
             tvp.columns.add("UserID", sql.VarChar(20));
-            tvp.columns.add("Line", sql.BigInt);            
+            tvp.columns.add("Line", sql.BigInt);             
 
             req.body.forEach(item => {
                tvp.rows.add(
@@ -308,6 +310,22 @@ app.post('/PerBatchUpload', async (req,res) => {
 
 
 });
+
+
+app.get('/Report', async (req,res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request().query('SELECT * FROM Report_Summary');
+    } catch (err){
+        console.error(err);
+        res.status(500).send('Database Error');
+    }
+
+
+
+}); // for report 
+
+
 
 
 

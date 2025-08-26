@@ -270,7 +270,7 @@ app.post('/PerBatchUpload', async (req,res) => {
             tvp.columns.add("CAmt", sql.BigInt);
             tvp.columns.add("RefLine", sql.BigInt);
             tvp.columns.add("UserID", sql.VarChar(20));
-            tvp.columns.add("Line",sql.BigInt);
+            
 
             req.body.forEach(item => {
                tvp.rows.add(
@@ -287,7 +287,7 @@ app.post('/PerBatchUpload', async (req,res) => {
         item.CAmt,
         item.RefLine,
         item.UserID,
-        item.Line
+         
 
 
                ); 

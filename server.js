@@ -316,6 +316,7 @@ app.get('/Report', async (req,res) => {
     try {
         const pool = await sql.connect(config);
         const result = await pool.request().query('SELECT * FROM Report_Summary');
+               res.json(result.recordset);  
     } catch (err){
         console.error(err);
         res.status(500).send('Database Error');

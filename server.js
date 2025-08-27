@@ -203,7 +203,7 @@ app.post('/ActChecker', async (req, res) => {
 });// checker for transactions
 
  
-
+ 
 app.get('/UserLogin', async (req,res) =>{
     try {
         const pool = await sql.connect(config);
@@ -325,6 +325,59 @@ app.get('/Report', async (req,res) => {
 
 
 }); // for report 
+
+
+
+app.post('/ActChecker', async (req, res) => {
+
+ 
+    const { UserID, MStat } = req.body;
+    try {
+        const pool = await sql.connect(config);
+
+        const result = await pool.request()
+            .input('User', sql.VarChar(20), UserID)
+            .input('Stat', sql.VarChar(20), MStat)
+            .execute('H_UserTranChecker');
+
+        res.json(result.recordset);
+    } catch (err) {
+        console.error("Error occurred", err);
+        res.status(500).send('Database Error');
+    }
+});// checker for transactions
+
+
+
+
+
+
+app.post('/Report_Compilation', async(req,res) => {
+
+    const {Rp_Content, Remarks, Rp_Date, RP_Tran_link, RP_type} = req.body; // these are the variable for the api function
+    
+    try{
+        const pool = await sql.connect(config);
+
+        const result = await pool.request()
+        .input('Rp_Content',sql.VarChar(30),Rp_Content)
+        .input('Remarks',sql.VarChar(100),Remarks)
+        .input('Rp_Date',sql.DateTime,Rp_Date)
+        .input('RP_Tran_link',sql.BigInt,RP_Tran_link)
+        .input('RP_type',sql.BigInt,RP_type)
+        .execute('Report_Submission') 
+
+
+        res.json(result.recordset);
+
+    }catch(err){
+        console.error("Error occured", err);
+        res.status(500).send('Database Error');
+    }
+
+
+}); // inserting report from data 
+
 
 
 

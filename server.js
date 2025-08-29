@@ -107,7 +107,7 @@ app.get('/ClientFiltered', async (req,res) =>{
             console.error(err);
             res.status(500).send('Database Error');
             }
-});
+}); // filtered data from client 
 
 app.get('/PrevRead', async (req,res) =>{
         const{WMNo} = req.query;
@@ -384,9 +384,9 @@ app.post('/Report_Compilation', async(req,res) => {
 
 
 function safeDate(value) {
-  if (!value) return new Date();  // fallback to NOW
+  if (!value) return new Date();  // fallback to NOW date 
   const d = new Date(value);
-  return isNaN(d.getTime()) ? new Date() : d;  // if invalid, also fallback to NOW
+  return isNaN(d.getTime()) ? new Date() : d;  // if invalid, also fallback to NOW date 
 }
 
 const PORT = process.env.PORT || 3000;
